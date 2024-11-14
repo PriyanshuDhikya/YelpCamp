@@ -1,12 +1,15 @@
+require('dotenv').config()
+
 const mongoose=require('mongoose')
 const Campground=require('../models/campground')
 const cities=require('./cities')
 const {places,descriptors}=require('./seedHelpers')
+const dbUrl = process.env.DB_URL || 'mongodb://127.0.0.1:27017/YelpCamp'
 
 main().catch(err => console.log(err));
 
 async function main() {
-  await mongoose.connect('mongodb://127.0.0.1:27017/YelpCamp')
+  await mongoose.connect(dbUrl)
   .then(()=>{
     console.log('database connection established!')
   })
@@ -23,7 +26,7 @@ const seedDB= async()=>{
     const random1000=Math.floor(Math.random()*1000)
     const price=Math.floor(Math.random()*20)+10
     const camp=new Campground({
-      author: '671901e8ea6d6283c1fe4119',
+      author: '67324034e5c1f93fac15971a',
       title: `${sample(descriptors)} ${sample(places)}`,
       location: `${cities[random1000].city}, ${cities[random1000].state} `,
       description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum quasi doloremque libero maiores nihil at qui, temporibus sunt adipisci sed exercitationem totam quas consequuntur perferendis unde voluptatem, maxime harum alias.',
